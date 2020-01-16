@@ -10,10 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_11_150837) do
+ActiveRecord::Schema.define(version: 2020_01_12_060516) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cards", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.integer "sort_order"
+    t.bigint "list_id", null: false
+    t.bigint "assignee_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["assignee_id"], name: "index_cards_on_assignee_id"
+    t.index ["list_id"], name: "index_cards_on_list_id"
+  end
+
+  create_table "dashboards", force: :cascade do |t|
+    t.string "title"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_dashboards_on_user_id"
+  end
+
+  create_table "lists", force: :cascade do |t|
+    t.string "title"
+    t.integer "sort_order"
+    t.bigint "dashboard_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dashboard_id"], name: "index_lists_on_dashboard_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -27,4 +56,8 @@ ActiveRecord::Schema.define(version: 2020_01_11_150837) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "cards", "lists"
+  add_foreign_key "cards", "users", column: "assignee_id"
+  add_foreign_key "dashboards", "users"
+  add_foreign_key "lists", "dashboards"
 end
