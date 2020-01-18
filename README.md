@@ -14,10 +14,6 @@ which uses the following:
    
    `docker-compose build`
 
-1. From within the `rails` folder, run 
-   
-   `docker-compose up`
-
 1. Update the yarn packages using the following command:
 
    `docker-compose run web yarn install --check-files`
@@ -29,6 +25,10 @@ which uses the following:
 1. For the initial setup, create the application's database in postgres container using the following command:
 
    `docker-compose run web rake db:migrate`
+   
+1. From within the `rails` folder, run 
+   
+   `docker-compose up`
 
 1. Access the rails application using the following url.
 
