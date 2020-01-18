@@ -20,7 +20,7 @@ which uses the following:
 
 1. Update the yarn packages using the following command:
 
-   `docker-compose run yarn install --check-files`
+   `docker-compose run web yarn install --check-files`
    
 1. For the initial setup, create the application's database in postgres container using the following command:
 
